@@ -4,7 +4,6 @@ using namespace std;
 
 int main(void)
 {
-	// 백업안됨 ㅠㅠ
 	// 배열
 	/*
 	char str1[2][5] =
