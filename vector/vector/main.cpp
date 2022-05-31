@@ -1,4 +1,4 @@
-// ***** Vector v0.21
+// ***** Vector v0.3
 #include <iostream>
 
 using namespace std;
@@ -20,7 +20,7 @@ int main(void)
 	};
 	*/
 	
-	
+	// git 새로운것을 덮어씌우지 않고 이전 버전을 지킬려고함	
 	// 
 
 
