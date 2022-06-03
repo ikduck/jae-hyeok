@@ -1,4 +1,4 @@
-// ***** Vector v0.7
+// ***** Vector v0.75
 #include <iostream>
 
 using namespace std;
@@ -25,95 +25,40 @@ void push_back(const int& _Value);
 
 int main(void)
 {
-	// ** 누적된 횟수 만큼 비효율 (!100 (팩토리얼))
-	for (int i = 0; i < 17; ++i)
+	// ** 누적 횟수만큼 비효율
+	for (int i = 0; i < 10; ++i)
 		push_back(i * 100 + 100);
 
 	for (int i = 0; i < Size; ++i)
 		cout << Vector[i] << endl;
-
-	// 배열 생성이 3번 이상이되면 3 += 3/2 - 4.5 가되지만 int형이기 때문에 0.5를 버림처리하여 4개
-	// 4 += 4/2 = 6 이런식으로 점점 커진다.
-	/*
-	push_back(100);
-	push_back(200);
-	push_back(300);
-	*/
-	//for (int i = 0; i < Size; ++i)
-	//	cout << Vector[i] << endl;
-	// 새로 만들고 복사하고 추가하기
 
 	return 0;
 }
 
 void push_back(const int& _Value)
 {
-	Capacity += (Capacity <= 3) ? 1 : Capacity >> 1;
+	if(Size >= Capacity)
+		Capacity += (Capacity <= 3) ? 1 : Capacity >> 1;
 
-	// size와 Capacity 같이 증가하게
-
-	// ** Capacity 만큼 만듦
 	int* Temp = new int[Capacity];
 
-	// Size만큼 복사
 	for (int i = 0; i < Size; ++i)
 		Temp[i] = Vector[i];
 
-	// 벡터가 남는게 있으면 지우고 초기화
 	if(Vector)
 	{
 		delete Vector;
 		Vector = nullptr;
 	}
-
-
-	Temp[Size - 1] = _Value;
+	
+	Temp[Size] = _Value;
 	++Size;
 
 	Vector = Temp;
-	// 원소의 개수는 한번에 한번씩 증가
-	//++Size;
 
-	//cout << Capacity << endl;
-	/*
-	if (Size <= 3)
-	{
-		++Size;
-		
-		// if(Size <= 0 ) 일때
-		//Vector = new int[Size];
-		//Vector[Size - 1] = _Value;
-		
-	}
-	else
-	{
-		Size += Size * 0.5f; // 0.5f에서 f를 붙이면 4바이트를 소모하지만 0.5는 8바이트를 사용함
-		// 컴퓨터가 64 비트일때 long 일때와 longlong 일때 (정수일때) 1회 연산하지만
-		// 실수는 다르다 실수는 여러번 연산하기 때문에 무조건 적게 사용하는것이 좋다.
-	}
-	*/
-	/*
-	else
-	{
-		
-		int* Temp = new int[Size];
-		// Vector = new int[Size]; 로 하게되면 현재는 문제가없지만 
-		// 데이터가 축적되어 오버플로우가 일어나서 갑작스럽게 터지기때문에
-		// 문제를 찾기가 굉장히 오래걸리고 힘듦
-
-		for (int i = 0; i < Size - 1; ++i)
-			Temp[i] = Vector[i];
-
-		// heap영역에 계속 누적되서 메모리 누수가 일어나서 지워줘야함
-		delete Vector;
-		Vector = nullptr;
-
-		Temp[Size - 1] = _Value;
-		Vector = Temp;
-	}
-	*/
+	cout << "Size : " << Size << endl;
+	cout << "Capacity : " << Capacity << endl << endl;
 }
-// c를 배우면 좋다는 것은 메모리 관리를 철저하게 해줘야하기 때문이다.(포인터를 잘다뤄야 메모리관리를 잘할수있음)
 
 // 2022.05.31
 /*
@@ -357,5 +302,109 @@ cout << str2[1][4] << endl;
 
 // 2022.06.03
 /*
+// 전역변수 선언
+// ** 원소의 개수
+int Size = 0;
 
+// ** 최대 수용 개수
+int Capacity = 0;
+
+// ** 컨테이너
+int* Vector = nullptr;
+
+// 전방선언 (모르는데 어떻게 가요)
+void push_back(const int& _Value);
+
+int main(void)
+{
+	// ** 누적된 횟수 만큼 비효율 (!100 (팩토리얼))
+	for (int i = 0; i < 17; ++i)
+		push_back(i * 100 + 100);
+
+	for (int i = 0; i < Size; ++i)
+		cout << Vector[i] << endl;
+
+	// 배열 생성이 3번 이상이되면 3 += 3/2 - 4.5 가되지만 int형이기 때문에 0.5를 버림처리하여 4개
+	// 4 += 4/2 = 6 이런식으로 점점 커진다.
+	
+	// push_back(100);
+	// push_back(200);
+	// push_back(300);
+	
+	//for (int i = 0; i < Size; ++i)
+	//	cout << Vector[i] << endl;
+	// 새로 만들고 복사하고 추가하기
+
+return 0;
+}
+
+void push_back(const int& _Value)
+{
+	if (Size >= Capacity)
+		Capacity += (Capacity <= 3) ? 1 : Capacity >> 1;
+
+	// size와 Capacity 같이 증가하게
+
+	// ** Capacity 만큼 만듦
+	int* Temp = new int[Capacity];
+
+	// Size만큼 복사
+	for (int i = 0; i < Size; ++i)
+		Temp[i] = Vector[i];
+
+	// 벡터가 남는게 있으면 지우고 초기화
+	if (Vector)
+	{
+		delete Vector;
+		Vector = nullptr;
+	}
+
+
+	Temp[Size - 1] = _Value;
+	++Size;
+
+	Vector = Temp;
+	// 원소의 개수는 한번에 한번씩 증가
+	//++Size;
+
+	//cout << Capacity << endl;
+	/*
+	if (Size <= 3)
+	{
+		++Size;
+
+		// if(Size <= 0 ) 일때
+		//Vector = new int[Size];
+		//Vector[Size - 1] = _Value;
+
+	}
+	else
+	{
+		Size += Size * 0.5f; // 0.5f에서 f를 붙이면 4바이트를 소모하지만 0.5는 8바이트를 사용함
+		// 컴퓨터가 64 비트일때 long 일때와 longlong 일때 (정수일때) 1회 연산하지만
+		// 실수는 다르다 실수는 여러번 연산하기 때문에 무조건 적게 사용하는것이 좋다.
+	}
+	
+	
+	else
+	{
+
+		int* Temp = new int[Size];
+		// Vector = new int[Size]; 로 하게되면 현재는 문제가없지만
+		// 데이터가 축적되어 오버플로우가 일어나서 갑작스럽게 터지기때문에
+		// 문제를 찾기가 굉장히 오래걸리고 힘듦
+
+		for (int i = 0; i < Size - 1; ++i)
+			Temp[i] = Vector[i];
+
+		// heap영역에 계속 누적되서 메모리 누수가 일어나서 지워줘야함
+		delete Vector;
+		Vector = nullptr;
+
+		Temp[Size - 1] = _Value;
+		Vector = Temp;
+	}
+	
+}
+// c를 배우면 좋다는 것은 메모리 관리를 철저하게 해줘야하기 때문이다.(포인터를 잘다뤄야 메모리관리를 잘할수있음)
 */
