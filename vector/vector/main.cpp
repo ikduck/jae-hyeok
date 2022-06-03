@@ -1,4 +1,4 @@
-// ***** Vector v0.6
+// ***** Vector v0.7
 #include <iostream>
 
 using namespace std;
@@ -10,98 +10,112 @@ using namespace std;
 // 5. 컨테이너의 시작 지점
 // 6. 컨테이너의 중간 지점
 
+// 전역변수 선언
+// ** 원소의 개수
+int Size = 0;
+
+// ** 최대 수용 개수
+int Capacity = 0;
+
+// ** 컨테이너 
+int* Vector = nullptr;
+
+// 전방선언 (모르는데 어떻게 가요)
+void push_back(const int& _Value);
 
 int main(void)
 {
-	// *** 양수 표현의 최대값에서 +1을 더하면 어떤값이 나올까
-	/*
-	char n = 127;
-	n += 1;
-	printf_s("%d\n", n);
-	*/
-
-	// *** + 연산과 - 연산중 무엇이 더 효율 적일까.
-	/*
-	char n = 16;
-	n += -6;
-	n -= 6;
-	printf_s("%d\n", n);
-	*/
-
-	// *** 나누기를 해야 할 때에는 *로 대체할수 있을지 확인해보고
-	/*
-	int n1 = 1920 / 2;
-	int n2 = 1920 * 0.5;
-
-	printf_s("%d\n", n);
-
-	// *** 아래와 같이 쉬프트 연산자로 사용할수 있을지 확인해보자.
-	printf_s("%d\n", n >> 1);
-
-	*/
-	/*
-	 배열의 크기를 10으로 만들었을때 컴퓨터는 10을 넣을수있는 값 16으로 만든다
-	 그후 16 - 6을 해줘야하기 때문에 효율이 좋지않다.
-	 
-	*/
-
-	// *** 
-	/*
-	const int MAX = 16;
-	int Vecter[MAX];
-
-	int length = 10;
-
-	for (int i = 0; i < length; ++i)
-	{
-		cout << Vecter[i] << endl;
-	}
-	*/
-
-	// 
-	/*
-	// ** 배열은 0이 아닌 값으로만 초기화가 가능하다.
-	// ** 배열은 상수값으로만 초기화가 가능하다
-	
-	// ** 아래와 같이 사용한다면 위 조건은 무시할수 있다.
-	(배열은 아니지만 배열처럼 사용할수 있다.)
-
-	// 자료구조를 stack이 아닌 hip으로 만들거임
-	int Size = 0;
-	int iter = 0;
-
-	int* Vector = new int[Size];
-	
-	Vector[iter];
-	*/
-	// int Vector[0]은 못만듬 [1]은 만들수 있지만 안씀
-	// 배열에는 상수만 들어가지만 동적할당에는 값이 0인 변수도 들어감
-	// 배열을 만드는 것이 아니라 할당할 구역을 정하는 것 길이가 아니라 크기가됨
-
-	// *** 배열은 아니지만 배열처럼 사용할 수 있다.
-	int Size = 10;
-	int iter = 0;
-
-	int* Vector = new int[Size];
+	// ** 누적된 횟수 만큼 비효율 (!100 (팩토리얼))
+	for (int i = 0; i < 17; ++i)
+		push_back(i * 100 + 100);
 
 	for (int i = 0; i < Size; ++i)
-	{
-		Vector[i] = i;
-	}
+		cout << Vector[i] << endl;
 
-	// for (int i = 0; i < Size; ++i)
-	// 	cout << Vector[i] << endl;
-
-	for (int i = 0; i < 11; ++i)
-		cout << Vector[iter++] << endl;
-
-	// 크기 값을 오버하면 문제가 생김
+	// 배열 생성이 3번 이상이되면 3 += 3/2 - 4.5 가되지만 int형이기 때문에 0.5를 버림처리하여 4개
+	// 4 += 4/2 = 6 이런식으로 점점 커진다.
+	/*
+	push_back(100);
+	push_back(200);
+	push_back(300);
+	*/
+	//for (int i = 0; i < Size; ++i)
+	//	cout << Vector[i] << endl;
+	// 새로 만들고 복사하고 추가하기
 
 	return 0;
-};
+}
+
+void push_back(const int& _Value)
+{
+	Capacity += (Capacity <= 3) ? 1 : Capacity >> 1;
+
+	// size와 Capacity 같이 증가하게
+
+	// ** Capacity 만큼 만듦
+	int* Temp = new int[Capacity];
+
+	// Size만큼 복사
+	for (int i = 0; i < Size; ++i)
+		Temp[i] = Vector[i];
+
+	// 벡터가 남는게 있으면 지우고 초기화
+	if(Vector)
+	{
+		delete Vector;
+		Vector = nullptr;
+	}
+
+
+	Temp[Size - 1] = _Value;
+	++Size;
+
+	Vector = Temp;
+	// 원소의 개수는 한번에 한번씩 증가
+	//++Size;
+
+	//cout << Capacity << endl;
+	/*
+	if (Size <= 3)
+	{
+		++Size;
+		
+		// if(Size <= 0 ) 일때
+		//Vector = new int[Size];
+		//Vector[Size - 1] = _Value;
+		
+	}
+	else
+	{
+		Size += Size * 0.5f; // 0.5f에서 f를 붙이면 4바이트를 소모하지만 0.5는 8바이트를 사용함
+		// 컴퓨터가 64 비트일때 long 일때와 longlong 일때 (정수일때) 1회 연산하지만
+		// 실수는 다르다 실수는 여러번 연산하기 때문에 무조건 적게 사용하는것이 좋다.
+	}
+	*/
+	/*
+	else
+	{
+		
+		int* Temp = new int[Size];
+		// Vector = new int[Size]; 로 하게되면 현재는 문제가없지만 
+		// 데이터가 축적되어 오버플로우가 일어나서 갑작스럽게 터지기때문에
+		// 문제를 찾기가 굉장히 오래걸리고 힘듦
+
+		for (int i = 0; i < Size - 1; ++i)
+			Temp[i] = Vector[i];
+
+		// heap영역에 계속 누적되서 메모리 누수가 일어나서 지워줘야함
+		delete Vector;
+		Vector = nullptr;
+
+		Temp[Size - 1] = _Value;
+		Vector = Temp;
+	}
+	*/
+}
+// c를 배우면 좋다는 것은 메모리 관리를 철저하게 해줘야하기 때문이다.(포인터를 잘다뤄야 메모리관리를 잘할수있음)
 
 // 2022.05.31
-// 선생님의 말씀
 /*
 // git 새로운것을 덮어씌우지 않고 이전 버전을 지킬려고함	
 // 브런치를 나눠서 구역을 나눔 , 경합하는 과정이 힘듦
@@ -145,7 +159,6 @@ cout << str2[1][4] << endl;
 	*/
 
 // 2022.06.02
-// 선생님의 말씀
 /*
 * // 원인이 뭘지 찾아보는 습관을 기르자 (어디가 문제인거지?)
 
@@ -250,4 +263,99 @@ cout << str2[1][4] << endl;
 
 	// >>
 	곱하기의 기능을 하게됨
+*/
+
+#pragma region 2022.06.02 2의 보수 선생님 정리
+
+// *** 양수 표현의 최대값에서 +1을 더하면 어떤값이 나올까
+	/*
+	char n = 127;
+	n += 1;
+	printf_s("%d\n", n);
+	*/
+
+	// *** + 연산과 - 연산중 무엇이 더 효율 적일까.
+	/*
+	char n = 16;
+	n += -6;
+	n -= 6;
+	printf_s("%d\n", n);
+	*/
+
+	// *** 나누기를 해야 할 때에는 *로 대체할수 있을지 확인해보고
+	/*
+	int n1 = 1920 / 2;
+	int n2 = 1920 * 0.5;
+
+	printf_s("%d\n", n);
+
+	// *** 아래와 같이 쉬프트 연산자로 사용할수 있을지 확인해보자.
+	printf_s("%d\n", n >> 1);
+
+	*/
+	/*
+	 배열의 크기를 10으로 만들었을때 컴퓨터는 10을 넣을수있는 값 16으로 만든다
+	 그후 16 - 6을 해줘야하기 때문에 효율이 좋지않다.
+
+	*/
+
+	// *** 
+	/*
+	const int MAX = 16;
+	int Vecter[MAX];
+
+	int length = 10;
+
+	for (int i = 0; i < length; ++i)
+	{
+		cout << Vecter[i] << endl;
+	}
+	*/
+
+	// 
+	/*
+	// ** 배열은 0이 아닌 값으로만 초기화가 가능하다.
+	// ** 배열은 상수값으로만 초기화가 가능하다
+
+	// ** 아래와 같이 사용한다면 위 조건은 무시할수 있다.
+	(배열은 아니지만 배열처럼 사용할수 있다.)
+
+	// 자료구조를 stack이 아닌 hip으로 만들거임
+	int Size = 0;
+	int iter = 0;
+
+	int* Vector = new int[Size];
+
+	Vector[iter];
+	*/
+	// int Vector[0]은 못만듬 [1]은 만들수 있지만 안씀
+	// 배열에는 상수만 들어가지만 동적할당에는 값이 0인 변수도 들어감
+	// 배열을 만드는 것이 아니라 할당할 구역을 정하는 것 길이가 아니라 크기가됨
+
+	// *** 배열은 아니지만 배열처럼 사용할 수 있다.
+	/*
+	int Size = 10;
+	int iter = 0;
+	
+	int* Vector = new int[Size];
+	
+	for (int i = 0; i < Size; ++i)
+	{
+		Vector[i] = i;
+	}
+	
+	// for (int i = 0; i < Size; ++i)
+	// 	cout << Vector[i] << endl;
+	
+	for (int i = 0; i < 11; ++i)
+		cout << Vector[iter++] << endl;
+	
+	// 크기 값을 오버하면 문제가 생김
+	*/
+
+#pragma endregion
+
+// 2022.06.03
+/*
+
 */
