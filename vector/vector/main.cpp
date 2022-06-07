@@ -1,4 +1,4 @@
-// ***** Vector v0.9
+// ***** Vector v0.95
 #include <iostream>
 
 using namespace std;
@@ -48,14 +48,15 @@ int main(void)
 	cout << "컨테이너의 처음 값: " << front() << endl;
 	cout << "컨테이너의 마지막 값: " << back() << endl << endl;
 
-	erase(3);
+	//erase(3);
+
+	insert(7, 2);
 
 	// *** 출력
 	for (int i = 0; i < Size; ++i)
 		cout << "Value: " << Vector[i] << endl;
 	cout << "Size : " << Size << endl;
 	cout << "Capacity : " << Capacity << endl << endl;
-
 
 	return 0;
 }
@@ -78,7 +79,7 @@ void push_back(const int& _Value)
 		// 동적할당은 Temp에
 		// int* Temp = new int[Capacity];
 		// 배열 제일 마지막에 null 값을 넣어줄때
-		int* Temp = new int[Capacity]; 
+		int* Temp = new int[Capacity + 1]; 
 
 		// if 더블 포인터를 사용할려면
 		/*
@@ -87,6 +88,8 @@ void push_back(const int& _Value)
 		for (int i = 0; i <= Capacity; ++i)
 			Vector[i] = NULL;
 		*/
+		for (int i = 0; i <= Capacity; ++i)
+			Temp[i] = NULL;
 
 		for (int i = 0; i < Size; ++i)
 			Temp[i] = Vector[i];
@@ -156,7 +159,14 @@ void erase(const int& _where)
 
 void insert(const int& _Value, const int& _where)
 {
+	++Size;
 
+	for (int i = Size; i > _where + (-1); --i)
+	{
+		Vector[i + 1] = Vector[i];
+	}
+
+	Vector[_where] = _Value;
 }
 
 
