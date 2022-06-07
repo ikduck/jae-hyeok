@@ -1,4 +1,4 @@
-// ***** Vector v0.75
+// ***** Vector v0.8
 #include <iostream>
 
 using namespace std;
@@ -20,7 +20,7 @@ int Capacity = 0;
 // ** 컨테이너 
 int* Vector = nullptr;
 
-// 전방선언 (모르는데 어떻게 가요)
+// 전방선언 (모르는데 어떻게 가요),
 void push_back(const int& _Value);
 
 int main(void)
@@ -43,7 +43,7 @@ void push_back(const int& _Value)
 	int* Temp = new int[Capacity];
 
 	for (int i = 0; i < Size; ++i)
-		Temp[i] = Vector[i];
+		Temp[i] = Vector[i];	
 
 	if(Vector)
 	{
