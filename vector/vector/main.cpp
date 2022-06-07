@@ -3,13 +3,6 @@
 
 using namespace std;
 
-// 1. 데이터 추가 (새로운 공간 확장)
-// 2. 데이터 제거
-// 3. 데이터를 삽입 할 수 있는 공간의 쓰기
-// 4. 현재 삽입되어있는 원소의 개수
-// 5. 컨테이너의 시작 지점
-// 6. 컨테이너의 중간 지점
-
 // 전역변수 선언
 // ** 원소의 개수
 int Size = 0;
@@ -20,8 +13,27 @@ int Capacity = 0;
 // ** 컨테이너 
 int* Vector = nullptr;
 
-// 전방선언 (모르는데 어떻게 가요),
+// 전방선언 (모르는데 어떻게 가요), 동적할당 및 배열 복사 추가
+// *** 컨테이너의 마지막 위치에 값을 추가.
 void push_back(const int& _Value);
+
+// *** 컨테이너의 마지막 위치에 있는 값을 삭제.
+void pop_back();
+
+// f12(정의로 이동하기)
+
+int front();
+
+int back();
+
+void erase(const int& _where);
+
+void insert(const int& _Value, const int& _where);
+
+/*
+int* begin();
+int end();
+*/
 
 int main(void)
 {
@@ -29,11 +41,32 @@ int main(void)
 	for (int i = 0; i < 10; ++i)
 		push_back(i * 100 + 100);
 
+	pop_back();
+	push_back(10000);
+
+
+	cout << "컨테이너의 처음 값: " << front() << endl;
+	cout << "컨테이너의 마지막 값: " << back() << endl << endl;
+
+	erase(3);
+
+	// *** 출력
 	for (int i = 0; i < Size; ++i)
-		cout << Vector[i] << endl;
+		cout << "Value: " << Vector[i] << endl;
+	cout << "Size : " << Size << endl;
+	cout << "Capacity : " << Capacity << endl << endl;
+
 
 	return 0;
 }
+
+// 1. 데이터 추가 (새로운 공간 확장)
+// 2. 데이터 제거
+// 3. 데이터를 삽입 할 수 있는 공간의 쓰기
+// 4. 현재 삽입되어있는 원소의 개수
+
+// 5. 컨테이너의 시작 지점
+// 6. 컨테이너의 중간 지점
 
 void push_back(const int& _Value)
 {
@@ -43,11 +76,21 @@ void push_back(const int& _Value)
 		Capacity += (Capacity <= 3) ? 1 : Capacity >> 1;
 
 		// 동적할당은 Temp에
-		int* Temp = new int[Capacity];
+		// int* Temp = new int[Capacity];
+		// 배열 제일 마지막에 null 값을 넣어줄때
+		int* Temp = new int[Capacity]; 
+
+		// if 더블 포인터를 사용할려면
+		/*
+		int** dPoint = &Temp;
+
+		for (int i = 0; i <= Capacity; ++i)
+			Vector[i] = NULL;
+		*/
 
 		for (int i = 0; i < Size; ++i)
 			Temp[i] = Vector[i];
-
+		
 		if(Vector)
 		{
 			delete Vector;
@@ -63,9 +106,13 @@ void push_back(const int& _Value)
 	else
 		Vector[Size] = _Value;
 		
+	// else가 있어서 둘중하나는 무조건 실행되기 때문에 ++Size를 외부로 빼줌
 	++Size;
+	
+	// null 추가
+	// Vector[Capacity] = NULL;
 
-	cout << "Value : " << _Value << endl;
+	// cout << "Value : " << _Value << endl;
 	cout << "Size : " << Size << endl;
 	cout << "Capacity : " << Capacity << endl << endl;
 
@@ -75,8 +122,59 @@ void push_back(const int& _Value)
 		Capacity += (Capacity <= 3) ? 1 : Capacity >> 1;
 	// 이것만 넣었음 ;;
 	*/
+}
+
+void pop_back()
+{
+	// 삭제만 하기 때문에 값을 받아오지않음
+	// 지울 필요없고 다음번에 넣을수있게 만들어 주면됨
+	// 깨끗하게 지울려고하는 것 부터가 이미 비효율적임
+	--Size;
+}
+
+int front()
+{
+	return Vector[0];
+}
+
+int back()
+{
+	return Vector[Size - 1];
+}
+
+void erase(const int& _where)
+{
+	// ** 특정 위치에 있는 원소를 삭제하고 정렬
+	--Size;
+
+	for (int i = _where + (-1); i < Size; ++i)
+	{
+		Vector[i] = Vector[i + 1];
+	}
 
 }
+
+void insert(const int& _Value, const int& _where)
+{
+
+}
+
+
+// 코드를 다 바꿔야되서 폐지 list로 넘어가면 더 쉬워짐
+/*
+int* begin()
+{
+	// return Vector[0];
+	// fornt가 바뀌면 begin도 바뀌게
+	return Vector;
+}
+
+// 더블 포인터를 사용해야함
+int end()
+{
+	return Vector[Size];
+}
+*/
 
 // 2022.05.31
 /*
