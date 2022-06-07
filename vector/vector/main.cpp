@@ -1,4 +1,4 @@
-// ***** Vector v0.8
+// ***** Vector v0.9
 #include <iostream>
 
 using namespace std;
@@ -37,27 +37,45 @@ int main(void)
 
 void push_back(const int& _Value)
 {
-	if(Size >= Capacity)
+	if (Capacity <= Size) 
+	{
+		// 공간 추가
 		Capacity += (Capacity <= 3) ? 1 : Capacity >> 1;
 
-	int* Temp = new int[Capacity];
+		// 동적할당은 Temp에
+		int* Temp = new int[Capacity];
 
-	for (int i = 0; i < Size; ++i)
-		Temp[i] = Vector[i];	
+		for (int i = 0; i < Size; ++i)
+			Temp[i] = Vector[i];
 
-	if(Vector)
-	{
-		delete Vector;
-		Vector = nullptr;
-	}
+		if(Vector)
+		{
+			delete Vector;
+			Vector = nullptr;
+		}
 	
-	Temp[Size] = _Value;
+		// 복사
+		Temp[Size] = _Value;
+
+		// 값은 Vector에
+		Vector = Temp;
+	}
+	else
+		Vector[Size] = _Value;
+		
 	++Size;
 
-	Vector = Temp;
-
+	cout << "Value : " << _Value << endl;
 	cout << "Size : " << Size << endl;
 	cout << "Capacity : " << Capacity << endl << endl;
+
+	// 나의 답
+	/*
+	if(Size >= Capacity) 
+		Capacity += (Capacity <= 3) ? 1 : Capacity >> 1;
+	// 이것만 넣었음 ;;
+	*/
+
 }
 
 // 2022.05.31
