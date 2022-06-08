@@ -48,7 +48,7 @@ int main(void)
 	cout << "컨테이너의 처음 값: " << front() << endl;
 	cout << "컨테이너의 마지막 값: " << back() << endl << endl;
 
-	//erase(3);
+	// erase(3);
 
 	insert(7, 2);
 
