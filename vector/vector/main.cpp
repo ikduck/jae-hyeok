@@ -4,7 +4,7 @@
 using namespace std;
 
 // 전역변수 선언
-// ** 원소의 개수
+// ** 현재 원소의 개수
 int Size = 0;
 
 // ** 최대 수용 개수
@@ -22,13 +22,18 @@ void pop_back();
 
 // f12(정의로 이동하기) = ctrl + 더블 클릭(예전에는 현재 더블클릭 기능이엿음)
 
+// *** 가장 앞쪽에 있는 원소
 int front();
 
+// *** 가장 뒷쪽에 있는 원소
 int back();
 
+// *** _where 위치에 데이터 삭제
 void erase(const int& _where);
 
 // alt + enter누르면 선언 정의 만들기 간편하게 만들수 있음
+
+// *** _where 위치에 데이터 추가
 void insert(const int& _where, const int& _Value);
 
 /*
@@ -39,23 +44,25 @@ int end();
 int main(void)
 {
 	// ** 누적 횟수만큼 비효율
+	// ** 값 추가
 	for (int i = 0; i < 10; ++i)
-		push_back(i * 100 + 100);
+		push_back(i * 1 + 1);
 
-	pop_back();
-	push_back(10000);
+	// pop_back();
+	// push_back(10000);
 
-
-	cout << "컨테이너의 처음 값: " << front() << endl;
-	cout << "컨테이너의 마지막 값: " << back() << endl << endl;
+	// ** 출력
+	// cout << "컨테이너의 처음 값: " << front() << endl;
+	// cout << "컨테이너의 마지막 값: " << back() << endl << endl;
 
 	// erase(3);
 
-	insert(2, 7);
+	insert(2, 777);
 
 	// *** 출력
 	for (int i = 0; i < Size; ++i)
 		cout << "Value: " << Vector[i] << endl;
+
 	cout << "Size : " << Size << endl;
 	cout << "Capacity : " << Capacity << endl << endl;
 
@@ -72,14 +79,18 @@ int main(void)
 
 void push_back(const int& _Value)
 {
+	// *** 만약 더이상 수용할 수 있는 공간이 없다면...
 	if (Capacity <= Size) 
 	{
 		// 공간 추가
+		// *** 현재 수용량(Capacity)이 4보다 작다면 1씩 증가하고.
+		// *** 현재 수용량이 4보다 크거나 같다면 1/2 만큼 추가함. 
 		Capacity += (Capacity <= 3) ? 1 : Capacity >> 1;
 
 		// 동적할당은 Temp에
 		// int* Temp = new int[Capacity];
 		// 배열 제일 마지막에 null 값을 넣어줄때
+		// *** 임시의 저장소를 생성
 		int* Temp = new int[Capacity + 1]; 
 
 		// if 더블 포인터를 사용할려면
@@ -89,12 +100,16 @@ void push_back(const int& _Value)
 		for (int i = 0; i <= Capacity; ++i)
 			Vector[i] = NULL;
 		*/
+
+		// *** 생성된 공간에 초기화함.
 		for (int i = 0; i <= Capacity; ++i)
 			Temp[i] = NULL;
 
+		// *** 기존에 있던 값을 복사.
 		for (int i = 0; i < Size; ++i)
 			Temp[i] = Vector[i];
 		
+		// *** 기존에 값을 삭제.
 		if(Vector)
 		{
 			delete Vector;
@@ -102,23 +117,30 @@ void push_back(const int& _Value)
 		}
 	
 		// 복사
+		// *** 임시의 값(해당 주소)를 복사해옴.
 		Temp[Size] = _Value;
 
 		// 값은 Vector에
+		// *** 임시 주소값에 복사해둔 값과 
+		// *** 추가된 새로운 값을 다시 
+		// *** 전역변수로 저장되어 있는 Vector 로 가져옴. 
 		Vector = Temp;
 	}
 	else
+		// *** 마지막 위치에 값 추가.
 		Vector[Size] = _Value;
 		
 	// else가 있어서 둘중하나는 무조건 실행되기 때문에 ++Size를 외부로 빼줌
+	// *** 현재 원소의 최대값 증가.
 	++Size;
 	
 	// null 추가
 	// Vector[Capacity] = NULL;
 
+	// 작동 확인을 위해 만듦
 	// cout << "Value : " << _Value << endl;
-	cout << "Size : " << Size << endl;
-	cout << "Capacity : " << Capacity << endl << endl;
+	// cout << "Size : " << Size << endl;
+	// cout << "Capacity : " << Capacity << endl << endl;
 
 	// 나의 답
 	/*
@@ -133,24 +155,30 @@ void pop_back()
 	// 삭제만 하기 때문에 값을 받아오지않음
 	// 지울 필요없고 다음번에 넣을수있게 만들어 주면됨
 	// 깨끗하게 지울려고하는 것 부터가 이미 비효율적임
+	// *** 현재 원소의 최대값 증가
 	--Size;
 }
 
 int front()
 {
+	// *** 0번째 원소 변환
 	return Vector[0];
 }
 
 int back()
 {
+	// *** 원소의 최대값 감소
 	return Vector[Size - 1];
 }
 
 void erase(const int& _where)
 {
 	// ** 특정 위치에 있는 원소를 삭제하고 정렬
+
+	// *** 원소의 최대값 감소
 	--Size;
 
+	// *** 재정렬
 	for (int i = _where + (-1); i < Size; ++i)
 	{
 		Vector[i] = Vector[i + 1];
@@ -161,7 +189,6 @@ void erase(const int& _where)
 void insert(const int& _where, const int& _Value)
 {
 	if (Capacity <= Size)
-	{
 		Capacity += (Capacity <= 3) ? 1 : Capacity >> 1;
 
 		// *** 임시 저장소
@@ -177,11 +204,12 @@ void insert(const int& _where, const int& _Value)
 
 		// *** 해당 위치에 값 삽입
 		Temp[_where] = _Value;
+		Size++;
 
 		// *** 해당 위치 이후의 값을 복사
 		for (int i = _where + 1; i < Size; ++i)
 		{
-			Vector[i] = Vector[i + 1];
+			Temp[i] = Vector[i - 1];
 		}
 
 		if (Vector)
@@ -192,11 +220,10 @@ void insert(const int& _where, const int& _Value)
 
 		// 값은 Vector에
 		Vector = Temp;
-	}
-	else
-	{
-		Vector[Size] = _Value;
-	}
+
+	//else
+	// 	Vector[Size] = _Value;
+
 	// 똑같은 코드가 두번 반복되면 반드시 줄일 수 있다.
 }
 
@@ -582,3 +609,31 @@ void push_back(const int& _Value)
 */
 
 // 시간이 없어서 단축키와 동선을 줄이기위해 코드를 줄임
+
+// 네이버 지식백과 검색해보자 
+
+// 스택은 위가 뚫혀있는 구조, 하노이 탑 같은 구조
+/*
+	call by value 
+	값이 변하지않음 다른 함수에서 값을 변경했다고해도
+	그 함수가 끝나면 값이 원래대로 돌아옴
+	(변수 보존)
+	call by &(래퍼런스) 
+	주소를 가지고있음
+	값을 변경한후 값이 변경되어도 힙영역에 값이 변한채로 유지됨
+
+	& 단항으로 사용했을때는 주소
+	&& 이항으로 사용했을때는 and 기능
+
+	const int&
+
+	const를 사용해서 값의 변경을 막음 (const는 건드리지 않는 것이 좋음)
+*/
+
+// 학습방법? 프로그래밍 문과형(그냥 암기함) > 이과형(이해하기 전까지 계속해서 연구함) 
+// 프로그래밍은 암기하고 넘어가야함
+// 시험치듯이 해야함 막히면 넘어가야함 조금 큰 단원으로 넘어가야함
+// if 메모리구조 스택 힙 같은건 외워야함
+// 나보다 똑똑한 사람이 만들어 놓은거 외워서 사용하자!
+// 컴공처럼 기초가 되는 교육을 받는 대학을 가야함 그래야지 스펙업이 가능
+// 학점은행제 5~6년 3년에 한번 일자리 변경. 대기업은 학벌중요함
