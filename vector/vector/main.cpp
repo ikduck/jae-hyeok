@@ -209,7 +209,7 @@ void insert(const int& _where, const int& _Value)
 		// *** 해당 위치 이후의 값을 복사
 		for (int i = _where + 1; i < Size; ++i)
 		{
-			Temp[i] = Vector[i - 1];
+			Temp[i] = Vector[i - 1]; // 4바이트 int형을 배열로 써서 나옴
 		}
 
 		if (Vector)
@@ -637,3 +637,10 @@ void push_back(const int& _Value)
 // 나보다 똑똑한 사람이 만들어 놓은거 외워서 사용하자!
 // 컴공처럼 기초가 되는 교육을 받는 대학을 가야함 그래야지 스펙업이 가능
 // 학점은행제 5~6년 3년에 한번 일자리 변경. 대기업은 학벌중요함
+
+// 연산자 오버로딩
+
+// list 단방향 리스트 , 양방향 리스트 , 
+// 요즘은 만들어진 형태로 사용함
+
+// 오버플로우 오버런
