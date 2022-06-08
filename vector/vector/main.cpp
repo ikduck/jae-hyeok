@@ -1,4 +1,4 @@
-// ***** Vector_v1.0
+// ***** Vector_v10
 #include <iostream>
 
 using namespace std;
@@ -20,7 +20,7 @@ void push_back(const int& _Value);
 // *** 컨테이너의 마지막 위치에 있는 값을 삭제.
 void pop_back();
 
-// f12(정의로 이동하기)
+// f12(정의로 이동하기) = ctrl + 더블 클릭(예전에는 현재 더블클릭 기능이엿음)
 
 int front();
 
@@ -28,7 +28,8 @@ int back();
 
 void erase(const int& _where);
 
-void insert(const int& _Value, const int& _where);
+// alt + enter누르면 선언 정의 만들기 간편하게 만들수 있음
+void insert(const int& _where, const int& _Value);
 
 /*
 int* begin();
@@ -50,7 +51,7 @@ int main(void)
 
 	// erase(3);
 
-	insert(7, 2);
+	insert(2, 7);
 
 	// *** 출력
 	for (int i = 0; i < Size; ++i)
@@ -157,7 +158,50 @@ void erase(const int& _where)
 
 }
 
-void insert(const int& _Value, const int& _where)
+void insert(const int& _where, const int& _Value)
+{
+	if (Capacity <= Size)
+	{
+		Capacity += (Capacity <= 3) ? 1 : Capacity >> 1;
+
+		// *** 임시 저장소
+		int* Temp = new int[Capacity + 1];
+
+		// *** 전체 초기화
+		for (int i = 0; i <= Capacity; ++i)
+			Temp[i] = NULL;
+
+		// *** 해당 위치 이전의 값을 복사.
+		for (int i = 0; i < _where; ++i)
+			Temp[i] = Vector[i];
+
+		// *** 해당 위치에 값 삽입
+		Temp[_where] = _Value;
+
+		// *** 해당 위치 이후의 값을 복사
+		for (int i = _where + 1; i < Size; ++i)
+		{
+			Vector[i] = Vector[i + 1];
+		}
+
+		if (Vector)
+		{
+			delete Vector;
+			Vector = nullptr;
+		}
+
+		// 값은 Vector에
+		Vector = Temp;
+	}
+	else
+	{
+		Vector[Size] = _Value;
+	}
+	// 똑같은 코드가 두번 반복되면 반드시 줄일 수 있다.
+}
+
+/*
+void insert(const int& _where,const int& _Value)
 {
 	++Size;
 
@@ -168,6 +212,8 @@ void insert(const int& _Value, const int& _where)
 
 	Vector[_where] = _Value;
 }
+*/
+
 
 
 // 코드를 다 바꿔야되서 폐지 list로 넘어가면 더 쉬워짐
@@ -534,3 +580,5 @@ void push_back(const int& _Value)
 }
 // c를 배우면 좋다는 것은 메모리 관리를 철저하게 해줘야하기 때문이다.(포인터를 잘다뤄야 메모리관리를 잘할수있음)
 */
+
+// 시간이 없어서 단축키와 동선을 줄이기위해 코드를 줄임
