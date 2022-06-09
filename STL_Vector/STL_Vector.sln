@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30907.101
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "STL_Vector", "STL_Vector\STL_Vector.vcxproj", "{F60296A7-27EF-434F-BD9C-C44F436BB0C2}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x64 = Debug|x64
+		Debug|x86 = Debug|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{F60296A7-27EF-434F-BD9C-C44F436BB0C2}.Debug|x64.ActiveCfg = Debug|x64
+		{F60296A7-27EF-434F-BD9C-C44F436BB0C2}.Debug|x64.Build.0 = Debug|x64
+		{F60296A7-27EF-434F-BD9C-C44F436BB0C2}.Debug|x86.ActiveCfg = Debug|Win32
+		{F60296A7-27EF-434F-BD9C-C44F436BB0C2}.Debug|x86.Build.0 = Debug|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {9EF95923-D99B-4FF0-A0DB-0F9A17F19735}
+	EndGlobalSection
+EndGlobal
