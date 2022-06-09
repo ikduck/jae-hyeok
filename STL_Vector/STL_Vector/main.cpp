@@ -99,6 +99,9 @@ int main(void)
 		iter != vecNumbers.end(); ++iter)
 		cout << (*iter) << endl;
 
+	// 후위연산 -> 값을 어딘가에 보관후 값이 오르면 가져오는데
+	// 전위 연산은 그런게 필요없어서 더 빠름
+
 	return 0;
 }
 
