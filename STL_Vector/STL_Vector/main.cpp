@@ -1,4 +1,4 @@
-// **** STL_Vector_v0.1
+// **** STL_Vector_v11
 #include <iostream>
 // 기본적으로 제공하는 기능	
 #include <vector>
@@ -94,18 +94,15 @@ int main(void)
 	// float형에서 int형으로 옮기면 소수점 이하 숫자가 소실됨
 	// vector<int>* iterator도 맞지만
 	// vector<int>::iterator iter 로 써주는게 맞음
-
 	for (vector<int>::iterator iter = vecNumbers.begin();
 		iter != vecNumbers.end(); ++iter)
 		cout << (*iter) << endl;
 
-	// 후위연산 -> 값을 어딘가에 보관후 값이 오르면 가져오는데
-	// 전위 연산은 그런게 필요없어서 더 빠름
 
 	return 0;
 }
 
-// 이미테이션 게임 
+// 이미테이션 게임 추천 영화
 /*
 	- 코딩하는 사람은 봐야하는 필수 영화임.
 	애니악 컴퓨터(최초의 컴퓨터) - 문자를 출력하기 위해 만들어진 컴퓨터
@@ -113,3 +110,6 @@ int main(void)
 */
 
 // 스택의 구조
+
+// 후위연산 -> 값을 어딘가에 보관후 값이 오르면 가져오는데
+// 전위 연산은 그런게 필요없어서 더 빠름
