@@ -63,12 +63,19 @@ int main(void)
 	// 헝가리안 표기법 사용(색으로 표현이 안되던 시절에 사용 _포함) = c코딩(1950)의 대세를 따름 (습관)
 	// vector = vec
 
+	int MAX = 50;
+
 	// vecNumber의 형태는 vector<int>다
 	vector<int> vecNumbers;
 	
+	// *** 입력
 	for(int i =0; i < 10; ++i)
+	{
 		vecNumbers.push_back(10 * i);
-	
+		cout << "Capacity : " << vecNumbers.capacity() << endl;
+		cout << "Size : " << vecNumbers.size() << endl << endl;
+		
+	}
 	// 출력법 에 대해
 	/*
 	// 유일하게 배열만 직접접근이 가능하다. * 다른 컨테이너는 직접접근(index접근)이 안됨 *
@@ -91,13 +98,68 @@ int main(void)
 		cout << *(iterator++) << endl;
 	*/
 
-	// float형에서 int형으로 옮기면 소수점 이하 숫자가 소실됨
-	// vector<int>* iterator도 맞지만
-	// vector<int>::iterator iter 로 써주는게 맞음
+	// 출력 추가 설명
+	/*
+		float형에서 int형으로 옮기면 소수점 이하 숫자가 소실됨
+		vector<int>* iterator도 맞지만
+		vector<int>::iterator iter 로 써주는게 맞음
+	*/
+
+	// 원소와 반복자
+	/*
+	// front() 와 back() 은 반복자가 아니고 원소 그자체임
+	// *** 가장 앞에 있는 *원소를 반환*
+	cout << vecNumbers.front() << endl;
+	// *** 가장 뒤에 있는 *원소를 반환*
+	cout << vecNumbers.back() << endl;
+
+	// begin() 과 end()는 반복자이다.
+	// *** 시작 지점을 가르키는 *반복자*	
+	cout << *vecNumbers.begin() << endl;
+	// *** 종료 지점을 가르키는 *반복자*
+	cout << *vecNumbers.end() << endl;
+	*/
+
+	// *** 출력
+	/*
+	for (int i = 0; i < vecNumbers.size(); ++i)
+			cout << vecNumbers[i] << endl;
+	
+	// *** 중요
 	for (vector<int>::iterator iter = vecNumbers.begin();
 		iter != vecNumbers.end(); ++iter)
 		cout << (*iter) << endl;
 
+	for (auto iter = vecNumbers.begin();
+			iter != vecNumbers.end(); ++iter)
+			cout << (*iter) << endl;
+
+	// *** 중요
+	for (auto iter = vecNumbers.begin(); iter != vecNumbers.end();)
+	{
+		// 증감 연산자가 조건문에 들어가면 지울때도 값이 증가해서 이상하게 출력됨
+		// 지울때는 지우고
+		// if((*iter) > MAX) 
+		if ((*iter) > 50)
+			iter = vecNumbers.erase(iter);
+		// 증가할때는 증가하게
+		else
+			++iter;
+	}
+
+	for (auto iter = vecNumbers.begin(); iter != vecNumbers.end(); ++iter)
+	{
+		cout << (*iter) << endl;
+	}
+	*/
+	
+	// insert 오랜 시간이 걸리지는 않지만 효율적이지 않음 
+	/*
+	1. _where 시작 주소 부터 끝주소까지 복사하고 임시 저장소에 넣음
+	1-2. 배열 크기가 작다면 늘림
+	2. _where 시작 지점에 값을 넣음
+	3. _where 끝 지점에 임시 저장소에 넣은 값을 넣음 
+	*/
 
 	return 0;
 }
