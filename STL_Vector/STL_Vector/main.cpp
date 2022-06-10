@@ -39,8 +39,7 @@ int main(void)
 
 	// 포인터에 대한 기본 설명
 	/*
-	// int* Pointer = 지역변수 (스택)
-	// new int = (힙)
+	// int* Pointer = 지역변수 (스택) , new int = (힙)
 	int* Pointer = new int;
 
 	// char* -> int형을 받을려면 형변환해야함 ,하지만 에러를 발생시킬수 있음
@@ -52,6 +51,7 @@ int main(void)
 	// int; 4바이트 정수형
 	// int*; 자료형이 int인 변수의 주소만 가질수 있음
 	
+	float형이 가진 값을 int*가 가질수는 있지만 소수점 뒷자리가 100% 소실됨
 
 	// 포인터는 선택
 	// 원본데이터의 값을 변경하고 싶을때 call by Reference 포인터를 써야함
@@ -76,27 +76,6 @@ int main(void)
 		cout << "Size : " << vecNumbers.size() << endl << endl;
 		
 	}
-	// 출력법 에 대해
-	/*
-	// 유일하게 배열만 직접접근이 가능하다. * 다른 컨테이너는 직접접근(index접근)이 안됨 *
-	int Array[16] = { 1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16 };
-
-	// for (int i = 0; i < 16; ++i)
-	//  	Array[i] = { i + 1 };
-
-	// 직접접근이 않기 때문에 iterator로 대신 접근함 (택배기사,카카오톡같이 직접접근이 안되기 때문에 간접적으로 접근해서 출력해줘야함)
-	// 배열또한 포인터임. c를 배우는 이유 -> 포인터 <- 데이터 관리
-	// google -> go언어만듦 
-	// 수동형 언어(c,c++) 프로그래머가 변수를 다 관리해야함 if(100개면 100개다!), 자동형 언어
-	int* iterator = Array;
-
-	for (int i = 0; i < 16; ++i)
-		cout << Array[i] << endl;
-
-	for (int i = 0; i < 16; ++i)
-		cout << *(iterator + i) << endl;
-		cout << *(iterator++) << endl;
-	*/
 
 	// 출력 추가 설명
 	/*
@@ -120,7 +99,29 @@ int main(void)
 	cout << *vecNumbers.end() << endl;
 	*/
 
-	// *** 출력
+	// *** 출력 1 : 직접접근을 할때
+	/*
+		// 유일하게 배열만 직접접근이 가능하다. * 다른 컨테이너는 직접접근(index접근)이 안됨 *
+		int Array[16] = { 1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16 };
+
+		// for (int i = 0; i < 16; ++i)
+		//  	Array[i] = { i + 1 };
+
+		// 직접접근이 않기 때문에 iterator로 대신 접근함 (택배기사,카카오톡같이 직접접근이 안되기 때문에 간접적으로 접근해서 출력해줘야함)
+		// 배열또한 포인터임. c를 배우는 이유 -> 포인터 <- 데이터 관리
+		// google -> go언어만듦
+		// 수동형 언어(c,c++) 프로그래머가 변수를 다 관리해야함 if(100개면 100개다!), 자동형 언어
+		int* iterator = Array;
+
+		for (int i = 0; i < 16; ++i)
+			cout << Array[i] << endl;
+
+		for (int i = 0; i < 16; ++i)
+			cout << *(iterator + i) << endl;
+			cout << *(iterator++) << endl;
+	*/
+
+	// *** 출력 2 
 	/*
 	for (int i = 0; i < vecNumbers.size(); ++i)
 			cout << vecNumbers[i] << endl;
@@ -133,15 +134,20 @@ int main(void)
 	for (auto iter = vecNumbers.begin();
 			iter != vecNumbers.end(); ++iter)
 			cout << (*iter) << endl;
+	*/
 
+	// *** 출력 3 
+	/*
 	// *** 중요
 	for (auto iter = vecNumbers.begin(); iter != vecNumbers.end();)
 	{
 		// 증감 연산자가 조건문에 들어가면 지울때도 값이 증가해서 이상하게 출력됨
 		// 지울때는 지우고
 		// if((*iter) > MAX) 
+
 		if ((*iter) > 50)
 			iter = vecNumbers.erase(iter);
+
 		// 증가할때는 증가하게
 		else
 			++iter;
@@ -151,9 +157,12 @@ int main(void)
 	{
 		cout << (*iter) << endl;
 	}
+
+	// 위의 코드를 응용해서 사용할수 있어야함 \
+	ex) if 문의 조건이 충돌이라고 생각했을때 충돌이 일어나면 종료시키고 아니면 계속 증가시키는 것처럼 사용할 수도 있음
 	*/
 	
-	// insert 오랜 시간이 걸리지는 않지만 효율적이지 않음 
+	// insert 오랜 시간이 걸리지는 않지만 효율적이지 않음
 	/*
 	1. _where 시작 주소 부터 끝주소까지 복사하고 임시 저장소에 넣음
 	1-2. 배열 크기가 작다면 늘림
